@@ -15,7 +15,7 @@ if (!fs.existsSync(output_path)) throw new Error("Output path does not exist!")
 
 console.log("Locating and finding HEIC files...")
 const all_files = fs.readdirSync(file_path)
-var heicFiles = all_files.filter(file => file.endsWith(".heic"))
+var heicFiles = all_files.filter(file => file.toLowerCase().endsWith(".heic"))
 console.log("Found " + heicFiles.length + " HEIC files. Starting conversion...")
 var done = 0;
 
