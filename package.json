@@ -1,0 +1,13 @@
+{
+    "name": "heic-converter",
+    "version": "1.0.0",
+    "scripts": {
+      "start": "node index.js",
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies": {
+      "heic-convert": "1.2.4",
+      "cli-progress": "3.11.1"
+    }
+  }
+  

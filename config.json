@@ -1,0 +1,5 @@
+{
+    "file_path": "./heic_folder",
+    "output_path": "./output_folder",
+    "threads": 2
+}
