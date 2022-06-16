@@ -5,7 +5,7 @@ const { parentPort, workerData } = require("worker_threads");
 var files = workerData.files;
 var filePath = workerData.filePath;
 var outputPath = workerData.outputPath;
-
+var attempt_rename_copy_on_error = workerData.attempt_rename_copy_on_error
 
 
 
@@ -17,11 +17,11 @@ const convert = require('heic-convert');
 
 (async () => {
     for (let i = 0; i < files.length; i++) {
-        try {
-            let file = files[i];
-            let path = filePath + "/" + file;
+        let file = files[i];
+        let path = filePath + "/" + file;
 
-            const inputBuffer = await promisify(fs.readFile)(path);
+        try {
+            const inputBuffer = fs.readFileSync(path)
             const outputBuffer = await convert({
                 buffer: inputBuffer,
                 format: 'JPEG'
@@ -32,11 +32,15 @@ const convert = require('heic-convert');
                 filename: file,
                 progress: i
             });
-        }catch(err) {
-            console.log("\nEncountered an error: ", err)
-            console.log("Will continue with next file.")
+        } catch (err) {
+            if (err.toString().includes("input buffer is not a HEIC") && attempt_rename_copy_on_error) {
+                fs.copyFileSync(path, `${outputPath}/${file.slice(0, -4)}jpg`)
+            } else {
+                console.log("\nEncountered an error: ", err.toString() + " on file: " + file)
+                console.log("Will continue with next file.")
+            }
             parentPort.postMessage({
-                filename: file,
+                filename: files[i],
                 progress: i
             });
         }

@@ -1,5 +1,6 @@
 {
     "file_path": "./heic_folder",
     "output_path": "./output_folder",
-    "threads": 2
+    "threads": 8,
+    "attempt_rename_copy_on_error": true
 }

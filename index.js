@@ -7,6 +7,8 @@ const bar1 = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
 
 const file_path = config.file_path
 const output_path = config.output_path
+const attempt_rename_copy_on_error = config.attempt_rename_copy_on_error
+
 var threads = config.threads
 
 
@@ -40,7 +42,8 @@ function startThread(files, filePath, outputPath) {
         workerData: {
             files: files,
             filePath: filePath,
-            outputPath: outputPath
+            outputPath: outputPath,
+            attempt_rename_copy_on_error: attempt_rename_copy_on_error
         }
     });
 
